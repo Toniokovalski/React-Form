@@ -1,6 +1,19 @@
-import {fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import Form from "../Form";
+
+jest.mock("axios", () => ({
+  __esModule: true,
+
+  default: {
+    post: () => ({
+      data: {
+        id: 1,
+        name: "test"
+      }
+    })
+  }
+}))
 
 describe("Test login component", () => {
   test("render login form with 2 buttons",  async () => {
@@ -40,20 +53,19 @@ describe("Test login component", () => {
     expect(phoneField.value).toMatch("")
   })
 
-  test("should be able to submit the form", () => {
+  test("should be able to submit the form", async() => {
     render (<Form/>);
     const submitBtn = screen.getByTestId("submit");
     const nameField = screen.getByPlaceholderText('Name');
     const emailField = screen.getByPlaceholderText('Email');
     const phoneField = screen.getByPlaceholderText('Mobile Number');
 
-    // userEvent.type(nameField, "anton");
     fireEvent.change(nameField, {target: {value: 'anton'}})
     fireEvent.change(emailField, {target: {value: 'anton@test.com'}})
     fireEvent.change(phoneField, {target: {value: 'anton'}})
 
     fireEvent.click(submitBtn);
 
-    expect(screen.getByText('User created successfully')).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('User created successfully')).toBeInTheDocument());
   })
 })

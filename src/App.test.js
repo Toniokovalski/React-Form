@@ -17,12 +17,4 @@ test("should render the basic labels",  () => {
   expect(name).toBeInTheDocument();
   expect(email).toBeInTheDocument();
   expect(mobile).toBeInTheDocument();
-
-  // fireEvent.change(screen.getByPlaceholderText('Name'), {target: {value: 'Anton'}})
-  // fireEvent.change(screen.getByPlaceholderText('Email'), {target: {value: 'Anton@test.com'}})
-  // fireEvent.change(screen.getByPlaceholderText('Mobile Number'), {target: {value: '123456789'}})
-  //
-  // fireEvent.click(screen.getByText('Create'))
-
-
 });

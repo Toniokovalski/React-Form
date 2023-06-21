@@ -7,14 +7,17 @@ import {
     StyledButton,
     ResetButton,
     StyledAlert,
-    StyledLabel
+    StyledLabel,
+    StyledUser
 } from './FormComponentsStyles';
+import axios from "axios";
 function Form() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [mobileNumber, setMobileNumber] = useState("");
     const [message, setMessage] = useState("");
     const [enabled, setEnabled] = useState(false)
+    const [user, setUser] = useState({})
 
     useEffect(() => {
         if (name.length >= 3 && email.length >= 3 && mobileNumber.length >= 3) setEnabled(true)
@@ -25,28 +28,39 @@ function Form() {
         e.preventDefault();
         setMessage("User created successfully")
         try {
-            const res = await fetch("https://httpbin.org/post", {
-                method: "POST",
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    mobileNumber: mobileNumber,
-                }),
-            })
-              .then((response) => {
-                if (response.status !== 200) {
-                    setMessage("Some error occurred");
-                    throw new Error(response.statusText);
-                }
-                console.log('test response', response.json())
-                return response.json();
-            }).finally(() => {
-                  setName("");
-                  setEmail("");
-                  setMobileNumber("");
-              });
-            const resJson = await res.json();
-            console.log('response', resJson)
+            const { data } = await axios.get(
+              "https://jsonplaceholder.typicode.com/users/1"
+            ).finally(() => {
+                setName("");
+                setEmail("");
+                setMobileNumber("");
+            });
+            setUser(data)
+            console.log('data', data)
+
+            // const res = await fetch("https://httpbin.org/post", {
+            //     method: "POST",
+            //     body: JSON.stringify({
+            //         name: name,
+            //         email: email,
+            //         mobileNumber: mobileNumber,
+            //     }),
+            // })
+            //   .then((response) => {
+            //     if (response.status !== 200) {
+            //         setMessage("Some error occurred");
+            //         throw new Error(response.statusText);
+            //     }
+            //     console.log('test response', response.json())
+            //     return response.json();
+            // })
+            //   .finally(() => {
+            //       setName("");
+            //       setEmail("");
+            //       setMobileNumber("");
+            //   });
+            // const resJson = await res.json();
+            // console.log('response', resJson)
         } catch (err) {
             console.log(err);
         }
@@ -96,8 +110,12 @@ function Form() {
               <StyledButton type="submit" data-testid={"submit"} disabled={!enabled}>Create</StyledButton>
               <ResetButton type="reset" data-testid={"reset-button"} onClick={resetForm}>Reset</ResetButton>
           </StyledForm>
-          <StyledAlert hidden={message} className="message">{message}</StyledAlert>
-          {/*{message && <StyledAlert className="message">{message ? message : null}</StyledAlert> }*/}
+          <StyledAlert hidden={message}>{message}</StyledAlert>
+
+          <StyledUser hidden={user}>
+              <div>{user.name}</div>
+              <div>{user.phone}</div>
+          </StyledUser>
       </FormWrapper>
     );
 }

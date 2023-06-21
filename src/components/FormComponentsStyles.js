@@ -62,7 +62,7 @@ export const ResetButton = styled.button`
 `
 
 export const StyledAlert = styled.div`
-  background-color: #f44336;
+  background-color: #6a915a;
   padding: 10px;
   color: white;
   border-radius: 5px;
@@ -71,4 +71,15 @@ export const StyledAlert = styled.div`
   margin: 0;
   text-align: center;
   display: ${props => props.hidden ? 'block' : 'none'};
+`
+export const StyledUser = styled.div`
+  color: green;
+  display: ${props => props.hidden ? 'block' : 'none'};
+  margin: 20px 0;
+  font-size: 1.25em;
+  font-weight: bold;
+  
+  div {
+    margin-bottom: 10px;
+  }
 `
