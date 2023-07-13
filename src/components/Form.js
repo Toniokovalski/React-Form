@@ -36,31 +36,6 @@ function Form() {
                 setMobileNumber("");
             });
             setUser(data)
-            console.log('data', data)
-
-            // const res = await fetch("https://httpbin.org/post", {
-            //     method: "POST",
-            //     body: JSON.stringify({
-            //         name: name,
-            //         email: email,
-            //         mobileNumber: mobileNumber,
-            //     }),
-            // })
-            //   .then((response) => {
-            //     if (response.status !== 200) {
-            //         setMessage("Some error occurred");
-            //         throw new Error(response.statusText);
-            //     }
-            //     console.log('test response', response.json())
-            //     return response.json();
-            // })
-            //   .finally(() => {
-            //       setName("");
-            //       setEmail("");
-            //       setMobileNumber("");
-            //   });
-            // const resJson = await res.json();
-            // console.log('response', resJson)
         } catch (err) {
             console.log(err);
         }
